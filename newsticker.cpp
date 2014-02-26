@@ -152,14 +152,19 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
     int currentLetterLengthTiny = tinyCharacterDictionary[tinystr[0]].second;
     int currentStringPositionTiny = 0;
 
+    int offsetT = offset;
+
     for(int k = 0; k < COLUMN_DRIVERS; k++)
     {
         for(int i = 0; i < 8; i++)
         {
             valR <<= 1;
             valG <<= 1;
-
-            if(stringPosition < length && (currentRow < 16 || str[stringPosition] == 'Q' || str[stringPosition] == 'g' || str[stringPosition] == 'j' || str[stringPosition] == 'p' || str[stringPosition] == 'q' || str[stringPosition] == 'y' ))
+            if(offsetT < 0)
+            {
+                offsetT++;
+            }
+            else if(stringPosition < length && (currentRow < 16 || str[stringPosition] == 'Q' || str[stringPosition] == 'g' || str[stringPosition] == 'j' || str[stringPosition] == 'p' || str[stringPosition] == 'q' || str[stringPosition] == 'y' ))
             {
                 if(color == 1 || color == 3)
                 {
@@ -180,7 +185,8 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
                     currentLetterPosition = 0;
                 }
             }
-            else if(currentStringPositionTiny < tinyLength && currentRow >= 16)
+            
+            if(currentStringPositionTiny < tinyLength && currentRow >= 16)
             {
                 if(tinyColor == 1 || tinyColor == 3)
                 {
