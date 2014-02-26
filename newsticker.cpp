@@ -116,7 +116,7 @@ char reverseBits(char x)
     return x;
 }
 
-unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int length, int offset, int currentRow, int &lastFirstLetter, int &curWidthSum, std::map<char, std::pair<int, int> > &characterDictionary, const bool *font)
+unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int length, int offset, int currentRow, int &lastFirstLetter, int &curWidthSum, std::map<char, std::pair<int, int> > &characterDictionary)
 {
     unsigned char *buffer = new unsigned char[COLUMN_DRIVERS * 2 + 3];
     if(currentRow > 12)
@@ -160,10 +160,10 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
             {
                 //if (colors[stringPosition] == 1 || colors[stringPosition] == 3) 
                 if(color == 1 || color == 3)
-                    valR |= font[currentRow][characterDictionary[str[stringPosition]].first+currentLetterPosition];
+                    valR |= targafont[currentRow][characterDictionary[str[stringPosition]].first+currentLetterPosition];
                 //if (colors[stringPosition] == 2 || colors[stringPosition] == 3) 
                 if(color == 2 || color == 3)
-                    valG |= font[currentRow][characterDictionary[str[stringPosition]].first+currentLetterPosition];
+                    valG |= targafont[currentRow][characterDictionary[str[stringPosition]].first+currentLetterPosition];
                 
                 currentLetterPosition++;
 
@@ -260,7 +260,7 @@ int main()
     int stringPixelLength = 0;
     for(int i = 0; i < newsString.length(); i++)
     {
-        stringPixelLength += sansCharacterDictionary[newsString[i]].second;
+        stringPixelLength += targaCharacterDictionary[newsString[i]].second;
     }
 
     int lastFirstLetter = 0;
@@ -302,7 +302,7 @@ int main()
             stringPixelLength = 0;
             for(int i = 0; i < newsString.length(); i++)
             {
-                stringPixelLength += sansCharacterDictionary[newsString[i]].second;
+                stringPixelLength += targaCharacterDictionary[newsString[i]].second;
             }
             printf("%s\n\n", newsString.c_str());
         }
@@ -320,7 +320,7 @@ int main()
             color = 3;
         else
             color = 1;*/
-        unsigned char* buffer = encodeLetters(newsString.c_str(), color, newsString.length(), offset, currentRow, lastFirstLetter, curWidthSum, sansCharacterDictionary, sansfont);
+        unsigned char* buffer = encodeLetters(newsString.c_str(), color, newsString.length(), offset, currentRow, lastFirstLetter, curWidthSum, targaCharacterDictionary);
         buffer[COLUMN_DRIVERS * 2] = reverseBits(~rows);
         buffer[COLUMN_DRIVERS * 2 + 1] = reverseBits(~rows>>8);
         buffer[COLUMN_DRIVERS * 2 + 2] = reverseBits(~rows>>16);
