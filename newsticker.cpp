@@ -345,6 +345,7 @@ int main()
 
             if(newsString == "NO INTERNET CONNECTION!")
             {
+                pthread_join(&thread);
                 pthread_create(&thread, NULL, GetRSSFeed, (void *) nextString);
             }
 
