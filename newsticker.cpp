@@ -116,7 +116,7 @@ char reverseBits(char x)
     return x;
 }
 
-unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int length, int offset, int currentRow, int &lastFirstLetter, int &curWidthSum, td::map<char, std::pair<int, int> > &characterDictionary)
+unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int length, int offset, int currentRow, int &lastFirstLetter, int &curWidthSum, std::map<char, std::pair<int, int> > &characterDictionary)
 {
     unsigned char *buffer = new unsigned char[COLUMN_DRIVERS * 2 + 3];
     if(currentRow > 12)
