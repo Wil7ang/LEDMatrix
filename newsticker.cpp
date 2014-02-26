@@ -308,7 +308,7 @@ int main()
     time (&rawtime);
     timeinfo = localtime (&rawtime);
     std::string currentTime = asctime(timeinfo);
-    currentTime.erase(currentTime.end());
+    currentTime.erase(currentTime.end()-1);
 
     unsigned long delta = millis();
     while(true)
@@ -399,7 +399,7 @@ int main()
             time (&rawtime);
             timeinfo = localtime (&rawtime);
             currentTime = asctime(timeinfo);
-            currentTime.erase(currentTime.end());
+            currentTime.erase(currentTime.end()-1);
         }
 
         unsigned long endTime = micros();
