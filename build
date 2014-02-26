@@ -1,0 +1,3 @@
+#!/bin/bash
+
+g++ -o newsticker -lwiringPi -lmrss -std=c++0x ./newsticker.cpp
