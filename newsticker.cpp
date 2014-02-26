@@ -340,7 +340,6 @@ int main()
             if(newsString == "NO INTERNET CONNECTION!")
             {
                 pthread_create(&thread, NULL, GetRSSFeed, (void *) nextString);
-                delay(5000);
             }
 
             stringPixelLength = 0;
@@ -400,6 +399,7 @@ int main()
             time (&rawtime);
             timeinfo = localtime (&rawtime);
             currentTime = asctime(timeinfo);
+            currentTime.erase(currentTime.end());
         }
 
         unsigned long endTime = micros();
