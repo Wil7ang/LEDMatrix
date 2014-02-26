@@ -321,14 +321,17 @@ int main()
             curWidthSum = 0;
 
             newsString = nextString->c_str();
+            
             transform(newsString.begin(), newsString.end(),newsString.begin(), ::toupper);
             delete nextString;
             nextString = new string();
             nextString->assign("");
 
-            if(newsString == "NO INTERNET CONNECTION!")
+            if(newsString == "NO INTERNET CONNECTION!" || newsString == "")
+            {
+                pthread_create(&thread, NULL, GetRSSFeed, (void *) nextString);
                 delay(5000);
-            pthread_create(&thread, NULL, GetRSSFeed, (void *) nextString);
+            }
 
             stringPixelLength = 0;
             for(int i = 0; i < newsString.length(); i++)
