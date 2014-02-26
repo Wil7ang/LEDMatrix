@@ -184,12 +184,14 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
             {
                 if(tinyColor == 1 || tinyColor == 3)
                 {
-                    valR |= targafont[currentRow][tinyCharacterDictionary[tinystr[currentStringPositionTiny]].first+currentLetterPositionTiny];
+                    if(currentRow == 16 && tinystr[currentStringPositionTiny] != '4')
+                        valR |= targafont[currentRow][tinyCharacterDictionary[tinystr[currentStringPositionTiny]].first+currentLetterPositionTiny];
                 }
 
                 if(tinyColor == 2 || tinyColor == 3)
                 {
-                    valG |= targafont[currentRow][tinyCharacterDictionary[tinystr[currentStringPositionTiny]].first+currentLetterPositionTiny];
+                    if(currentRow == 16 && tinystr[currentStringPositionTiny] != '4')
+                        valG |= targafont[currentRow][tinyCharacterDictionary[tinystr[currentStringPositionTiny]].first+currentLetterPositionTiny];
                 }
 
                 currentLetterPositionTiny++;
