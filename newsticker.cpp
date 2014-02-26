@@ -159,11 +159,17 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
             {
                 //if (colors[stringPosition] == 1 || colors[stringPosition] == 3) 
                 if(color == 1 || color == 3)
-                    valR |= targafont[currentRow][characterDictionary[str[stringPosition]].first+currentLetterPosition];
+                {
+                    if(currentRow < 24 || str[stringPosition] == 'Q' || str[stringPosition] == 'g' || str[stringPosition] == 'j' || str[stringPosition] == 'p' || str[stringPosition] == 'q' || str[stringPosition] == 'y' )
+                       valR |= targafont[currentRow][characterDictionary[str[stringPosition]].first+currentLetterPosition];
+                }
                 //if (colors[stringPosition] == 2 || colors[stringPosition] == 3) 
                 if(color == 2 || color == 3)
-                    valG |= targafont[currentRow][characterDictionary[str[stringPosition]].first+currentLetterPosition];
-                
+                {
+                    if(currentRow < 24 || str[stringPosition] == 'Q' || str[stringPosition] == 'g' || str[stringPosition] == 'j' || str[stringPosition] == 'p' || str[stringPosition] == 'q' || str[stringPosition] == 'y' )
+                        valG |= targafont[currentRow][characterDictionary[str[stringPosition]].first+currentLetterPosition];
+                }
+
                 currentLetterPosition++;
 
                 if(currentLetterPosition >= currentLetterLength)
