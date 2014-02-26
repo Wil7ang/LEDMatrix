@@ -116,7 +116,7 @@ char reverseBits(char x)
     return x;
 }
 
-unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int length, int offset, int currentRow, int &lastFirstLetter, int &curWidthSum, std::map<char, std::pair<int, int> > &characterDictionary)
+unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int length, int offset, int currentRow, int &lastFirstLetter, int &curWidthSum, std::map<char, std::pair<int, int> > &characterDictionary, const char *font)
 {
     unsigned char *buffer = new unsigned char[COLUMN_DRIVERS * 2 + 3];
     if(currentRow > 12)
@@ -160,10 +160,10 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
             {
                 //if (colors[stringPosition] == 1 || colors[stringPosition] == 3) 
                 if(color == 1 || color == 3)
-                    valR |= sansfont[currentRow][characterDictionary[str[stringPosition]].first+currentLetterPosition];
+                    valR |= font[currentRow][characterDictionary[str[stringPosition]].first+currentLetterPosition];
                 //if (colors[stringPosition] == 2 || colors[stringPosition] == 3) 
                 if(color == 2 || color == 3)
-                    valG |= sansfont[currentRow][characterDictionary[str[stringPosition]].first+currentLetterPosition];
+                    valG |= font[currentRow][characterDictionary[str[stringPosition]].first+currentLetterPosition];
                 
                 currentLetterPosition++;
 
@@ -320,7 +320,7 @@ int main()
             color = 3;
         else
             color = 1;*/
-        unsigned char* buffer = encodeLetters(newsString.c_str(), color, newsString.length(), offset, currentRow, lastFirstLetter, curWidthSum, sansCharacterDictionary);
+        unsigned char* buffer = encodeLetters(newsString.c_str(), color, newsString.length(), offset, currentRow, lastFirstLetter, curWidthSum, sansCharacterDictionary, sansfont);
         buffer[COLUMN_DRIVERS * 2] = reverseBits(~rows);
         buffer[COLUMN_DRIVERS * 2 + 1] = reverseBits(~rows>>8);
         buffer[COLUMN_DRIVERS * 2 + 2] = reverseBits(~rows>>16);
