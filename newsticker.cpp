@@ -303,6 +303,13 @@ int main()
     pthread_create(&thread, NULL, GetRSSFeed, (void *) nextString);
     printf("%s\n\n", newsString.c_str());
 
+    time_t rawtime;
+    struct tm * timeinfo;
+    time (&rawtime);
+    timeinfo = localtime (&rawtime);
+    currentTime = asctime(timeinfo);
+    std::string currentTime = "";
+
     unsigned long delta = millis();
     while(true)
     {
@@ -321,13 +328,16 @@ int main()
             curWidthSum = 0;
 
             newsString = nextString->c_str();
-            
+
             transform(newsString.begin(), newsString.end(),newsString.begin(), ::toupper);
             delete nextString;
             nextString = new string();
             nextString->assign("");
 
-            if(newsString == "NO INTERNET CONNECTION!" || newsString == "")
+            if(newsString == "")
+                newsString = "NO INTERNET CONNECTION!";
+
+            if(newsString == "NO INTERNET CONNECTION!")
             {
                 pthread_create(&thread, NULL, GetRSSFeed, (void *) nextString);
                 delay(5000);
@@ -355,13 +365,7 @@ int main()
         else
             color = 1;*/
 
-        //Get Time Info
-        time_t rawtime;
-        struct tm * timeinfo;
-
-        time (&rawtime);
-        timeinfo = localtime (&rawtime);
-        std::string currentTime = asctime(timeinfo);
+        
 
         unsigned char* buffer = encodeLetters(newsString.c_str(), color, newsString.length(), offset, currentRow, lastFirstLetter, curWidthSum, targaCharacterDictionary, currentTime.c_str(), currentTime.length(), 0, 3);
         buffer[COLUMN_DRIVERS * 2] = reverseBits(~rows);
@@ -391,6 +395,11 @@ int main()
         {
             delta = millis();  
             offset+=2.0f;
+
+            //Get Time Info
+            time (&rawtime);
+            timeinfo = localtime (&rawtime);
+            currentTime = asctime(timeinfo);
         }
 
         unsigned long endTime = micros();
