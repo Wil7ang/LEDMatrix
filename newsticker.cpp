@@ -307,8 +307,8 @@ int main()
     struct tm * timeinfo;
     time (&rawtime);
     timeinfo = localtime (&rawtime);
-    currentTime = asctime(timeinfo);
-    std::string currentTime = "";
+    std::string currentTime = asctime(timeinfo);
+    currentTime.erase(currentTime.end());
 
     unsigned long delta = millis();
     while(true)
