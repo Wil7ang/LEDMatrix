@@ -12,7 +12,7 @@
 #include <algorithm>
 
 #include "mrss.h"
-
+#include <time.h>
 #include <pthread.h>
 
 #define COLUMN_DRIVERS 21
@@ -116,7 +116,7 @@ char reverseBits(char x)
     return x;
 }
 
-unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int length, int offset, int currentRow, int &lastFirstLetter, int &curWidthSum, std::map<char, std::pair<int, int> > &characterDictionary, const char* tinystr, int tinyLength, int tinyOffset)
+unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int length, int offset, int currentRow, int &lastFirstLetter, int &curWidthSum, std::map<char, std::pair<int, int> > &characterDictionary, const char* tinystr, int tinyLength, int tinyOffset, int tinyColor)
 {
     unsigned char *buffer = new unsigned char[COLUMN_DRIVERS * 2 + 3];
 
@@ -182,12 +182,12 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
             }
             else if(currentStringPositionTiny < tinyLength && currentRow >= 16)
             {
-                if(color == 1 || color == 3)
+                if(tinyColor == 1 || tinyColor == 3)
                 {
                     valR |= targafont[currentRow][tinyCharacterDictionary[tinystr[currentStringPositionTiny]].first+currentLetterPositionTiny];
                 }
 
-                if(color == 2 || color == 3)
+                if(tinyColor == 2 || tinyColor == 3)
                 {
                     valG |= targafont[currentRow][tinyCharacterDictionary[tinystr[currentStringPositionTiny]].first+currentLetterPositionTiny];
                 }
@@ -347,7 +347,16 @@ int main()
             color = 3;
         else
             color = 1;*/
-        unsigned char* buffer = encodeLetters(newsString.c_str(), color, newsString.length(), offset, currentRow, lastFirstLetter, curWidthSum, targaCharacterDictionary, "Test Blah", 9, 0);
+
+        //Get Time Info
+        time_t rawtime;
+        struct tm * timeinfo;
+
+        time (&rawtime);
+        timeinfo = localtime (&rawtime);
+        std::string currentTime = asctime(timeinfo);
+
+        unsigned char* buffer = encodeLetters(newsString.c_str(), color, newsString.length(), offset, currentRow, lastFirstLetter, curWidthSum, targaCharacterDictionary, currentTime.c_str(), currentTime.length(), 0, 3);
         buffer[COLUMN_DRIVERS * 2] = reverseBits(~rows);
         buffer[COLUMN_DRIVERS * 2 + 1] = reverseBits(~rows>>8);
         buffer[COLUMN_DRIVERS * 2 + 2] = reverseBits(~rows>>16);
