@@ -164,7 +164,6 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
             if(offsetT < 0)
             {
                 offsetT++;
-                printf("%i %i\n", offsetT, i);
             }
             else if(stringPosition < length && (currentRow < 16 || str[stringPosition] == 'Q' || str[stringPosition] == 'g' || str[stringPosition] == 'j' || str[stringPosition] == 'p' || str[stringPosition] == 'q' || str[stringPosition] == 'y' ))
             {
@@ -228,9 +227,7 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
         
         valR = 0x0;
         valG = 0x0;
-        printf("COL %i\n", k);
     }
-    printf("FINISHED ROW\n");
     
     return buffer;
 }
