@@ -119,6 +119,9 @@ char reverseBits(char x)
 unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int length, int offset, int currentRow, int &lastFirstLetter, int &curWidthSum, std::map<char, std::pair<int, int> > &characterDictionary, const char* tinystr, int tinyLength, int tinyOffset, int tinyColor)
 {
     unsigned char *buffer = new unsigned char[COLUMN_DRIVERS * 2 + 3];
+    int offsetT = offset;
+    if(offset < 0)
+        offset = 0;
 
     int firstLetter = lastFirstLetter;
     int widthSum = curWidthSum;
@@ -151,8 +154,6 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
     int currentLetterPositionTiny = 0;
     int currentLetterLengthTiny = tinyCharacterDictionary[tinystr[0]].second;
     int currentStringPositionTiny = 0;
-
-    int offsetT = offset;
 
     for(int k = 0; k < COLUMN_DRIVERS; k++)
     {
