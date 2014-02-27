@@ -268,7 +268,7 @@ int main()
 
     int currentRow = 0;
 
-    float offset = 0.0f;
+    float offset = -200.0f;
 
     digitalWrite(latchPin, LOW);
     
@@ -329,7 +329,7 @@ int main()
 
         if(offset >= stringPixelLength)
         {
-            offset = 0.0f;
+            offset = -200.0f;
             lastFirstLetter = 0;
             curWidthSum = 0;
 
