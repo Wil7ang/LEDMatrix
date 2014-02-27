@@ -340,12 +340,9 @@ int main()
             nextString = new string();
             nextString->assign("");
 
-            if(newsString == "")
-                newsString = "NO INTERNET CONNECTION!";
-
             if(newsString == "NO INTERNET CONNECTION!")
             {
-                pthread_join(thread, NULL);
+                delay(5000);
                 pthread_create(&thread, NULL, GetRSSFeed, (void *) nextString);
             }
 
