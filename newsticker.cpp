@@ -227,6 +227,7 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
         
         valR = 0x0;
         valG = 0x0;
+        printf("COL %i\n", k);
     }
     printf("FINISHED ROW\n");
     
