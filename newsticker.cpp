@@ -345,6 +345,9 @@ int main()
             nextString = new string();
             nextString->assign("");
 
+            //if(newsString == "NO INTERNET CONNECTION!")
+            pthread_join(thread, NULL);
+
             pthread_create(&thread, NULL, GetRSSFeed, (void *) nextString);
 
             stringPixelLength = 0;
