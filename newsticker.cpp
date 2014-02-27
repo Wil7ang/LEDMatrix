@@ -269,7 +269,7 @@ int main()
 
     int currentRow = 0;
 
-    float offset = -8.0f;
+    float offset = -256.0f;
 
     digitalWrite(latchPin, LOW);
     
@@ -330,7 +330,7 @@ int main()
 
         if(offset >= stringPixelLength)
         {
-            offset = -8.0f;
+            offset = -256.0f;
             lastFirstLetter = 0;
             curWidthSum = 0;
 
@@ -394,7 +394,7 @@ int main()
         if(millis() - delta > 2 && currentRow == 24)
         {
             delta = millis();  
-            //offset+=2.0f;
+            offset+=2.0f;
 
             //Get Time Info
             time (&rawtime);
