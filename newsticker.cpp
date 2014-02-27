@@ -187,7 +187,11 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
                 }
             }
             
-            if(currentStringPositionTiny < tinyLength && currentRow >= 16)
+            if(tinyOffset < 0)
+            {
+                tinyOffset++;
+            }
+            else if(currentStringPositionTiny < tinyLength && currentRow >= 16)
             {
                 if(tinyColor == 1 || tinyColor == 3)
                 {
@@ -367,7 +371,7 @@ int main()
 
         
 
-        unsigned char* buffer = encodeLetters(newsString.c_str(), color, newsString.length(), offset, currentRow, lastFirstLetter, curWidthSum, targaCharacterDictionary, currentTime.c_str(), currentTime.length(), 0, 1);
+        unsigned char* buffer = encodeLetters(newsString.c_str(), color, newsString.length(), offset, currentRow, lastFirstLetter, curWidthSum, targaCharacterDictionary, currentTime.c_str(), currentTime.length(), -54, 1);
         buffer[COLUMN_DRIVERS * 2] = reverseBits(~rows);
         buffer[COLUMN_DRIVERS * 2 + 1] = reverseBits(~rows>>8);
         buffer[COLUMN_DRIVERS * 2 + 2] = reverseBits(~rows>>16);
