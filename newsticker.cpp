@@ -340,11 +340,7 @@ int main()
             nextString = new string();
             nextString->assign("");
 
-            if(newsString == "NO INTERNET CONNECTION!")
-            {
-                delay(5000);
-                pthread_create(&thread, NULL, GetRSSFeed, (void *) nextString);
-            }
+            pthread_create(&thread, NULL, GetRSSFeed, (void *) nextString);
 
             stringPixelLength = 0;
             for(int i = 0; i < newsString.length(); i++)
