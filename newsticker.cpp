@@ -268,7 +268,7 @@ int main()
 
     int currentRow = 0;
 
-    float offset = -200.0f;
+    float offset = -27.0f;
 
     digitalWrite(latchPin, LOW);
     
