@@ -163,6 +163,7 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
             if(offsetT < 0)
             {
                 offsetT++;
+                printf("%i %i\n", offsetT, i);
             }
             else if(stringPosition < length && (currentRow < 16 || str[stringPosition] == 'Q' || str[stringPosition] == 'g' || str[stringPosition] == 'j' || str[stringPosition] == 'p' || str[stringPosition] == 'q' || str[stringPosition] == 'y' ))
             {
@@ -212,6 +213,7 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
                 }
             }
         }
+
 #ifdef HW_DEBUGMODE
         if(offset % 100 >=0 && offset % 100 < 20)
         {
@@ -268,7 +270,7 @@ int main()
 
     int currentRow = 0;
 
-    float offset = -27.0f;
+    float offset = -8.0f;
 
     digitalWrite(latchPin, LOW);
     
@@ -329,7 +331,7 @@ int main()
 
         if(offset >= stringPixelLength)
         {
-            offset = -200.0f;
+            offset = -8.0f;
             lastFirstLetter = 0;
             curWidthSum = 0;
 
