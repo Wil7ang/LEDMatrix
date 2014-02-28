@@ -1,0 +1,31 @@
+update=2/5/2014 2:13:58 AM
+last_client=kicad
+[cvpcb]
+version=1
+NetIExt=net
+[pcbnew]
+version=1
+LastNetListRead=LED Matrix ProjectV4.net
+UseCmpFile=1
+PadDrill=0.000000000000
+PadDrillOvalY=0.000000000000
+PadSizeH=1.397000000000
+PadSizeV=2.000000000000
+PcbTextSizeV=1.000000000000
+PcbTextSizeH=1.000000000000
+PcbTextThickness=0.300000000000
+ModuleTextSizeV=1.000000000000
+ModuleTextSizeH=1.000000000000
+ModuleTextSizeThickness=0.150000000000
+SolderMaskClearance=0.000000000000
+SolderMaskMinWidth=0.000000000000
+DrawSegmentWidth=0.200000000000
+BoardOutlineThickness=0.150000000000
+ModuleOutlineThickness=0.150000000000
+[pcbnew/libraries]
+LibDir=
+LibName1=connect
+LibName2=ledmat
+LibName3=texas
+[general]
+version=1
