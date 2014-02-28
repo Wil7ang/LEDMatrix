@@ -30,7 +30,8 @@ float onTime = ((1.0/refreshRate) / numberOfRows) * 1000000;
 unsigned long delt = 0;
 
 int newsSource = 0;
-
+int color = 2;
+        
 void *GetRSSFeed(void *newsData)
 {
     string *nextString = (string *)newsData;
@@ -52,6 +53,11 @@ void *GetRSSFeed(void *newsData)
         newsSource = 0;
         break;
     }
+
+    if(newsSource == 0)
+        color = 2;
+    else
+        color = 3;
 
     /*else
     {
@@ -374,11 +380,7 @@ int main()
 
         int colors[18] = { 1,1,1,1,0,2,2,2,2,2,2,0,3,3,3,3,3,3};
 
-        int color = 2;
-        if(newsSource == 0)
-            color = 2;
-        else
-            color = 3;
+
 
         
 
