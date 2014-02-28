@@ -54,11 +54,6 @@ void *GetRSSFeed(void *newsData)
         break;
     }
 
-    if(newsSource == 0)
-        color = 2;
-    else
-        color = 3;
-
     /*else
     {
         ret = mrss_parse_url_with_options_and_error ("https://www.facebook.com/feeds/notifications.php?id=679469283&viewer=679469283&key=AWhY-tGsVPkIT3mj&format=rss20", &data, NULL, &code);
@@ -370,6 +365,11 @@ int main()
                 stringPixelLength += targaCharacterDictionary[newsString[i]].second;
             }
             printf("%s\n\n", newsString.c_str());
+
+            if(newsSource == 0)
+                color = 2;
+            else
+                color = 3;
         }
 
         digitalWrite(latchPin, LOW);
