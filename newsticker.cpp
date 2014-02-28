@@ -40,16 +40,24 @@ void *GetRSSFeed(void *newsData)
     CURLcode code;
     mrss_item_t *item;
     mrss_error_t ret;
-    if(newsSource == 0)
+    switch(newsSource)
     {
+        case 0:
         ret = mrss_parse_url_with_options_and_error ("https://news.google.com/?output=rss", &data, NULL, &code);
-        //newsSource = 1;
+        newsSource++;
+        break;
+
+        case 1:
+        ret = mrss_parse_url_with_options_and_error ("http://rss.cnn.com/rss/cnn_topstories.rss", &data, NULL, &code);
+        newsSource = 0;
+        break;
     }
-    else
+
+    /*else
     {
         ret = mrss_parse_url_with_options_and_error ("https://www.facebook.com/feeds/notifications.php?id=679469283&viewer=679469283&key=AWhY-tGsVPkIT3mj&format=rss20", &data, NULL, &code);
         newsSource = 0;
-    }
+    }*/
 
     if(!ret)
     {
@@ -366,11 +374,11 @@ int main()
 
         int colors[18] = { 1,1,1,1,0,2,2,2,2,2,2,0,3,3,3,3,3,3};
 
-        int color = 2;/*
+        int color = 2;
         if(newsSource == 0)
-            color = 3;
+            color = 2;
         else
-            color = 1;*/
+            color = 3;
 
         
 
