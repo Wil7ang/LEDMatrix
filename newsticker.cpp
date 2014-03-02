@@ -77,6 +77,8 @@ void *GetRSSFeed(void *newsData)
         nextString->assign("No internet connection!");
     newsData = (void *) nextString;
 
+    mrss_free(data);
+
     pthread_exit(NULL);
 }
 
