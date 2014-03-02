@@ -50,6 +50,11 @@ void *GetRSSFeed(void *newsData)
 
         case 1:
         ret = mrss_parse_url_with_options_and_error ("http://rss.cnn.com/rss/cnn_topstories.rss", &data, NULL, &code);
+        newsSource = ++;
+        break;
+
+        case 2:
+        ret = mrss_parse_url_with_options_and_error ("http://www.engadget.com/rss.xml", &data, NULL, &code);
         newsSource = 0;
         break;
     }
@@ -370,8 +375,10 @@ int main()
 
             if(newsSource == 0)
                 color = 2;
-            else
+            else if(newsSource == 1)
                 color = 3;
+            else
+                color = 1;
         }
 
         digitalWrite(latchPin, LOW);
