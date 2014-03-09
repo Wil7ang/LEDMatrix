@@ -235,7 +235,7 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
         }
 
 #ifdef HW_DEBUGMODE
-        if(offset % 100 >=0 && offset % 100 < 20)
+        if(offset % 100 >=0 && offset % 100 < 50)
         {
             valG = 0xFF;
             valR = 0xFF;
