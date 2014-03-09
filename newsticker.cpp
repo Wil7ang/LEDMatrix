@@ -19,7 +19,7 @@
 #define MODULE_WIDTH 3
 
 //#define DEBUGMODE
-#define HW_DEBUGMODE
+//#define HW_DEBUGMODE
 using namespace std;
 
 const int latchPin = 7;
@@ -261,7 +261,7 @@ struct newsData
 int main()
 {
     wiringPiSetup ();
-    if(wiringPiSPISetup (0, 1500000) < 0)
+    if(wiringPiSPISetup (0, 2000000) < 0)
     {
      //       printf("Error!\n");
         return -1;
