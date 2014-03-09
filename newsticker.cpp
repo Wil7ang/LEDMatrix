@@ -15,11 +15,11 @@
 #include <time.h>
 #include <pthread.h>
 
-#define COLUMN_DRIVERS 21
+#define COLUMN_DRIVERS 30
 #define MODULE_WIDTH 3
 
 //#define DEBUGMODE
-//#define HW_DEBUGMODE
+#define HW_DEBUGMODE
 using namespace std;
 
 const int latchPin = 7;
