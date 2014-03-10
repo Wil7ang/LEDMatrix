@@ -261,7 +261,7 @@ struct newsData
 int main()
 {
     wiringPiSetup ();
-    if(wiringPiSPISetup (0, 32000000) < 0)
+    if(wiringPiSPISetup (0, 5000000) < 0)
     {
      //       printf("Error!\n");
         return -1;
