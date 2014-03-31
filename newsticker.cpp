@@ -20,11 +20,12 @@
 
 //#define DEBUGMODE
 //#define HW_DEBUGMODE
+#define FPS_COUNTER
 using namespace std;
 
 const int latchPin = 7;
 
-float refreshRate = 60;
+float refreshRate = 120;
 float numberOfRows = 24;
 float onTime = ((1.0/refreshRate) / numberOfRows) * 1000000;
 unsigned long delt = 0;
@@ -338,9 +339,13 @@ int main()
     currentTime.erase(currentTime.end()-1);
 
     unsigned long delta = millis();
+
+    int fps = 0;
+    int fpsCounter = 0;
+    unsigned long fpsTime = millis();
+
     while(true)
     {
-        
         unsigned long stTime = micros();
         if(currentRow == 24)
         {
@@ -425,6 +430,23 @@ int main()
             delt = endTime - stTime;
             delayMicroseconds(onTime - (endTime-stTime)); 
         }
+
+        if(millis() - fpsTime >= 1000)
+        {
+            fpsTime = millis();
+            fps = fpsCounter;
+            fpsCounter = 0;
+
+#ifdef FPS_COUNTER
+            currentTime.append(" ");
+            currentTime.append(to_string(fps));
+#endif
+        }
+        else
+        {
+            fpsCounter++;
+        }
+
     }
 }
 
