@@ -422,12 +422,12 @@ int main()
             timeinfo = localtime (&rawtime);
             currentTime = asctime(timeinfo);
             currentTime.erase(currentTime.end()-1);
-        }
 
 #ifdef FPS_COUNTER
-        currentTime.append(" ");
-        currentTime.append(to_string(fps));
+            currentTime.append(" ");
+            currentTime.append(to_string(fps));
 #endif
+        }
 
         unsigned long endTime = micros();
         if(endTime - stTime < onTime)
