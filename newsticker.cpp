@@ -25,9 +25,9 @@ using namespace std;
 
 const int latchPin = 7;
 
-float refreshRate = 120;
-float numberOfRows = 24;
-float onTime = ((1.0/refreshRate) / numberOfRows) * 1000000;
+float refreshRate = 120.0f;
+float numberOfRows = 24.0f;
+float onTime = ((1.0f/refreshRate) / numberOfRows) * 1000000.0f;
 unsigned long delt = 0;
 
 int newsSource = 0;
@@ -442,7 +442,7 @@ int main()
             fps = fpsCounter;
             fpsCounter = 0;
         }
-        else
+        else if(currentRow == 24)
         {
             fpsCounter++;
         }
