@@ -386,7 +386,7 @@ int main()
                 color = 1;
         }
 
-        unsigned char* buffer = encodeLetters(newsString.c_str(), color, newsString.length(), offset, currentRow, lastFirstLetter, curWidthSum, targaCharacterDictionary, currentTime.c_str(), currentTime.length(), -120, 1);
+        unsigned char* buffer = encodeLetters(newsString.c_str(), color, newsString.length(), offset, currentRow, lastFirstLetter, curWidthSum, targaCharacterDictionary, currentTime.c_str(), currentTime.length(), -100, 1);
         buffer[COLUMN_DRIVERS * 2] = reverseBits(~rows);
         buffer[COLUMN_DRIVERS * 2 + 1] = reverseBits(~rows>>8);
         buffer[COLUMN_DRIVERS * 2 + 2] = reverseBits(~rows>>16);
@@ -424,6 +424,11 @@ int main()
             currentTime.erase(currentTime.end()-1);
         }
 
+#ifdef FPS_COUNTER
+        currentTime.append(" ");
+        currentTime.append(to_string(fps));
+#endif
+
         unsigned long endTime = micros();
         if(endTime - stTime < onTime)
         {
@@ -436,11 +441,6 @@ int main()
             fpsTime = millis();
             fps = fpsCounter;
             fpsCounter = 0;
-
-#ifdef FPS_COUNTER
-            currentTime.append(" ");
-            currentTime.append(to_string(fps));
-#endif
         }
         else
         {
