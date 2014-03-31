@@ -417,10 +417,10 @@ int main()
         currentRow++;
 
         
-        if(millis() - delta > 6 && currentRow == 24)
+        if(millis() - delta > 2 && currentRow == 24)
         {
             delta = millis();  
-            offset+=6.0f;
+            offset+=2.0f;
 
             //Get Time Info
             time (&rawtime);
