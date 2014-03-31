@@ -24,7 +24,7 @@ using namespace std;
 
 const int latchPin = 7;
 
-float refreshRate = 60;
+float refreshRate = 120;
 float numberOfRows = 24;
 float onTime = ((1.0/refreshRate) / numberOfRows) * 1000000;
 unsigned long delt = 0;
@@ -171,6 +171,9 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
     int currentLetterLengthTiny = tinyCharacterDictionary[tinystr[0]].second;
     int currentStringPositionTiny = 0;
 
+    int currentIndex = characterDictionary[str[stringPosition]].first+currentLetterPosition;
+    int tinyCurrentIndex = tinyCharacterDictionary[tinystr[currentStringPositionTiny]].first+currentLetterPositionTiny;
+
     for(int k = 0; k < COLUMN_DRIVERS; k++)
     {
         for(int i = 0; i < 8; i++)
@@ -185,12 +188,12 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
             {
                 if(color == 1 || color == 3)
                 {
-                    valR |= targafont[currentRow][characterDictionary[str[stringPosition]].first+currentLetterPosition];
+                    valR |= targafont[currentRow][currentIndex];
                 }
 
                 if(color == 2 || color == 3)
                 {
-                    valG |= targafont[currentRow][characterDictionary[str[stringPosition]].first+currentLetterPosition];
+                    valG |= targafont[currentRow][currentIndex];
                 }
 
                 currentLetterPosition++;
@@ -198,6 +201,7 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
                 if(currentLetterPosition >= currentLetterLength)
                 {
                     stringPosition++;
+                    currentIndex = characterDictionary[str[stringPosition]].first+currentLetterPosition;
                     currentLetterLength = characterDictionary[str[stringPosition]].second;
                     currentLetterPosition = 0;
                 }
@@ -213,14 +217,14 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
                 {
                     if(currentRow == 16 && tinystr[currentStringPositionTiny] == '4'){}
                     else
-                        valR |= targafont[currentRow][tinyCharacterDictionary[tinystr[currentStringPositionTiny]].first+currentLetterPositionTiny];
+                        valR |= targafont[currentRow][tinyCurrentIndex];
                 }
 
                 if(tinyColor == 2 || tinyColor == 3)
                 {
                     if(currentRow == 16 && tinystr[currentStringPositionTiny] == '4'){}
                     else
-                        valG |= targafont[currentRow][tinyCharacterDictionary[tinystr[currentStringPositionTiny]].first+currentLetterPositionTiny];
+                        valG |= targafont[currentRow][tinyCurrentIndex];
                 }
 
                 currentLetterPositionTiny++;
@@ -228,6 +232,7 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
                 if(currentLetterPositionTiny >= currentLetterLengthTiny)
                 {
                     currentStringPositionTiny++;
+                    tinyCurrentIndex = tinyCharacterDictionary[tinystr[currentStringPositionTiny]].first+currentLetterPositionTiny;
                     currentLetterLengthTiny = tinyCharacterDictionary[tinystr[currentStringPositionTiny]].second;
                     currentLetterPositionTiny = 0;
                 }
@@ -417,10 +422,10 @@ int main()
         currentRow++;
 
         
-        if(millis() - delta > 6 && currentRow == 24)
+        if(millis() - delta > 3 && currentRow == 24)
         {
             delta = millis();  
-            offset+=6.0f;
+            offset+=3.0f;
 
             //Get Time Info
             time (&rawtime);
