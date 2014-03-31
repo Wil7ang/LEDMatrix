@@ -59,12 +59,6 @@ void *GetRSSFeed(void *newsData)
         break;
     }
 
-    /*else
-    {
-        ret = mrss_parse_url_with_options_and_error ("https://www.facebook.com/feeds/notifications.php?id=679469283&viewer=679469283&key=AWhY-tGsVPkIT3mj&format=rss20", &data, NULL, &code);
-        newsSource = 0;
-    }*/
-
     if(!ret)
     {
         item = data->item;
@@ -142,7 +136,7 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
     int firstLetter = lastFirstLetter;
     int widthSum = curWidthSum;
     int nextLength = 0;
-    //rintf("%i\n", firstLetter);
+
     for(int i = firstLetter; i < length-1; i++)
     {
         nextLength = characterDictionary[str[i]].second;
@@ -276,7 +270,7 @@ int main()
     pinMode(latchPin, OUTPUT);
 
 
-    unsigned char clear[COLUMN_DRIVERS * 2 + 3];// = { 0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0,0,0};// = {0,0,0,0,0,0,0,0,0xFF,0xFF,0xFF};
+    unsigned char clear[COLUMN_DRIVERS * 2 + 3];
     for(int i = 0; i < COLUMN_DRIVERS * 2 + 3; i++)
     {
         if(i < COLUMN_DRIVERS * 2)
@@ -387,18 +381,6 @@ int main()
                 color = 1;
         }
 
-        digitalWrite(latchPin, LOW);
-
-        //char *str = "Red, green, yellow";
-        
-        
-
-        int colors[18] = { 1,1,1,1,0,2,2,2,2,2,2,0,3,3,3,3,3,3};
-
-
-
-        
-
         unsigned char* buffer = encodeLetters(newsString.c_str(), color, newsString.length(), offset, currentRow, lastFirstLetter, curWidthSum, targaCharacterDictionary, currentTime.c_str(), currentTime.length(), -120, 1);
         buffer[COLUMN_DRIVERS * 2] = reverseBits(~rows);
         buffer[COLUMN_DRIVERS * 2 + 1] = reverseBits(~rows>>8);
@@ -412,6 +394,8 @@ int main()
         printf("\n");
 #endif
 
+        digitalWrite(latchPin, LOW);
+
         wiringPiSPIDataRW(0, buffer, COLUMN_DRIVERS * 2 + 3);
         delete buffer;
 
@@ -423,10 +407,10 @@ int main()
         currentRow++;
 
         
-        if(millis() - delta > 2 && currentRow == 24)
+        if(millis() - delta > 6 && currentRow == 24)
         {
             delta = millis();  
-            offset+=2.0f;
+            offset+=1.0f;
 
             //Get Time Info
             time (&rawtime);
