@@ -24,7 +24,7 @@ using namespace std;
 
 const int latchPin = 7;
 
-float refreshRate = 120;
+float refreshRate = 60;
 float numberOfRows = 24;
 float onTime = ((1.0/refreshRate) / numberOfRows) * 1000000;
 unsigned long delt = 0;
