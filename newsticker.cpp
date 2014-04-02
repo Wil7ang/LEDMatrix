@@ -346,6 +346,13 @@ int main()
 
     while(true)
     {
+        unsigned long stTime = micros();
+        if(currentRow == 24)
+        {
+            rows = 0x800000;
+            currentRow = 0;
+        }
+
         if(offset >= stringPixelLength)
         {
             offset = -256.0f;
@@ -379,53 +386,33 @@ int main()
                 color = 1;
         }
 
-
-
-
-
-
-        rows = 0x800000;
-        for(int row = 0; row < 24; row++)
-        {
-            unsigned long stTime = micros();
-
-            unsigned char* buffer = encodeLetters(newsString.c_str(), color, newsString.length(), offset, row, lastFirstLetter, curWidthSum, targaCharacterDictionary, currentTime.c_str(), currentTime.length(), -100, 1);
-            buffer[COLUMN_DRIVERS * 2] = reverseBits(~rows);
-            buffer[COLUMN_DRIVERS * 2 + 1] = reverseBits(~rows>>8);
-            buffer[COLUMN_DRIVERS * 2 + 2] = reverseBits(~rows>>16);
+        unsigned char* buffer = encodeLetters(newsString.c_str(), color, newsString.length(), offset, currentRow, lastFirstLetter, curWidthSum, targaCharacterDictionary, currentTime.c_str(), currentTime.length(), -100, 1);
+        buffer[COLUMN_DRIVERS * 2] = reverseBits(~rows);
+        buffer[COLUMN_DRIVERS * 2 + 1] = reverseBits(~rows>>8);
+        buffer[COLUMN_DRIVERS * 2 + 2] = reverseBits(~rows>>16);
 
 #ifdef DEBUGMODE
-            for(int i = 0; i < COLUMN_DRIVERS * 2 + 3; i++)
-            {
-                printf("%s ", byte_to_binary(buffer[i]));
-            }
-            printf("\n");
+        for(int i = 0; i < COLUMN_DRIVERS * 2 + 3; i++)
+        {
+            printf("%s ", byte_to_binary(buffer[i]));
+        }
+        printf("\n");
 #endif
 
-            digitalWrite(latchPin, LOW);
+        digitalWrite(latchPin, LOW);
 
-            wiringPiSPIDataRW(0, buffer, COLUMN_DRIVERS * 2 + 3);
-            delete buffer;
+        wiringPiSPIDataRW(0, buffer, COLUMN_DRIVERS * 2 + 3);
+        delete buffer;
 
-            rows = rows >> 1;
+        rows = rows >> 1;
 
-            digitalWrite(latchPin, HIGH);
-            digitalWrite(latchPin, LOW);
-            
-            unsigned long endTime = micros();
-            if(endTime - stTime < onTime)
-            {
-                delt = endTime - stTime;
-                delayMicroseconds(onTime - (endTime-stTime)); 
-            }
-        }
-
-
-
-
+        digitalWrite(latchPin, HIGH);
+        digitalWrite(latchPin, LOW);
+        
+        currentRow++;
 
         
-        if(millis() - delta > 6)
+        if(millis() - delta > 6 && currentRow == 24)
         {
             delta = millis();  
             offset+=1.0f;
@@ -442,13 +429,20 @@ int main()
 #endif
         }
 
+        unsigned long endTime = micros();
+        if(endTime - stTime < onTime)
+        {
+            delt = endTime - stTime;
+            delayMicroseconds(onTime - (endTime-stTime)); 
+        }
+
         if(millis() - fpsTime >= 1000)
         {
             fpsTime = millis();
             fps = fpsCounter;
             fpsCounter = 0;
         }
-        else
+        else if(currentRow == 24)
         {
             fpsCounter++;
         }
