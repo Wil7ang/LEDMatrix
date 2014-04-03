@@ -183,12 +183,12 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
             {
                 if(color == 1 || color == 3)
                 {
-                    valG |= targafont[currentRow][currentIndex];
+                    valR |= targafont[currentRow][currentIndex];
                 }
 
                 if(color == 2 || color == 3)
                 {
-                    valR |= targafont[currentRow][currentIndex];
+                    valG |= targafont[currentRow][currentIndex];
                 }
 
                 currentLetterPosition++;
@@ -414,7 +414,7 @@ int main()
         {
             unsigned long stTime = micros();
 
-            unsigned char* buffer = encodeLetters(newsString.c_str(), color, newsString.length(), offset, row, lastFirstLetter, curWidthSum, targaCharacterDictionary, currentTime.c_str(), currentTime.length(), 0, 1);
+            unsigned char* buffer = encodeLetters(newsString.c_str(), color, newsString.length(), offset, row, lastFirstLetter, curWidthSum, targaCharacterDictionary, currentTime.c_str(), currentTime.length(), 0, 2);
             buffer[COLUMN_DRIVERS * 2] = reverseBits(~rows);
             buffer[COLUMN_DRIVERS * 2 + 1] = reverseBits(~rows>>8);
             buffer[COLUMN_DRIVERS * 2 + 2] = reverseBits(~rows>>16);
