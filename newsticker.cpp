@@ -390,16 +390,16 @@ int main()
             currentTime.append(to_string(fps));
 #endif
 
-            switch(newsSource)
+            switch(color)
             {
-                case 0:
-                currentTime.append("          CNN");
+                case 2:
+                currentTime.append("                      CNN");
+                break;
+                case 3:
+                currentTime.append("              Google News");
                 break;
                 case 1:
-                currentTime.append("  Google News");
-                break;
-                case 2:
-                currentTime.append("     Engadget");
+                currentTime.append("                 Engadget");
                 break;
             }
         }
@@ -444,7 +444,9 @@ int main()
                 delayMicroseconds(onTime - (endTime-stTime)); 
             }
         }
-
+        wiringPiSPIDataRW(0, clear, COLUMN_DRIVERS * 2 + 3);
+        digitalWrite(latchPin, HIGH);
+        digitalWrite(latchPin, LOW);
 
 
 
@@ -466,16 +468,16 @@ int main()
             currentTime.append(to_string(fps));
 #endif
 
-            switch(newsSource)
+            switch(color)
             {
-                case 0:
-                currentTime.append("          CNN");
+                case 2:
+                currentTime.append("                      CNN");
+                break;
+                case 3:
+                currentTime.append("              Google News");
                 break;
                 case 1:
-                currentTime.append("  Google News");
-                break;
-                case 2:
-                currentTime.append("     Engadget");
+                currentTime.append("                 Engadget");
                 break;
             }
         }
