@@ -449,7 +449,7 @@ int main()
                 currentTime.append("CNN");
                 break;
                 case 1:
-                currentTime.append("Google")
+                currentTime.append("Google");
                 break;
                 case 2:
                 currentTime.append("Engadget");
