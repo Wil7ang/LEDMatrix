@@ -378,6 +378,29 @@ int main()
                 color = 3;
             else
                 color = 1;
+
+            //Get Time Info
+            time (&rawtime);
+            timeinfo = localtime (&rawtime);
+            currentTime = asctime(timeinfo);
+            currentTime.erase(currentTime.end()-1);
+
+#ifdef FPS_COUNTER
+            currentTime.append(" ");
+            currentTime.append(to_string(fps));
+#endif
+
+            switch(newsSource)
+            {
+                case 0:
+                currentTime.append("                  CNN");
+                break;
+                case 1:
+                currentTime.append("          Google News");
+                break;
+                case 2:
+                currentTime.append("             Engadget");
+                break;
         }
 
 
