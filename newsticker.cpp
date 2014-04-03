@@ -183,12 +183,12 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
             {
                 if(color == 1 || color == 3)
                 {
-                    valR |= targafont[currentRow][currentIndex];
+                    valG |= targafont[currentRow][currentIndex];
                 }
 
                 if(color == 2 || color == 3)
                 {
-                    valG |= targafont[currentRow][currentIndex];
+                    valR |= targafont[currentRow][currentIndex];
                 }
 
                 currentLetterPosition++;
@@ -243,8 +243,8 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
         }
 #endif
 
-        buffer[(MODULE_WIDTH-1)-(k%MODULE_WIDTH) + int(floor((COLUMN_DRIVERS-1-k)/MODULE_WIDTH))*MODULE_WIDTH*2] = reverseBits(valG);
-        buffer[(MODULE_WIDTH-1)-(k%MODULE_WIDTH) + int(floor((COLUMN_DRIVERS-1-k)/MODULE_WIDTH))*MODULE_WIDTH*2+MODULE_WIDTH] = reverseBits(valR);
+        buffer[(MODULE_WIDTH-1)-(k%MODULE_WIDTH) + int(floor((COLUMN_DRIVERS-1-k)/MODULE_WIDTH))*MODULE_WIDTH*2] = reverseBits(valR);
+        buffer[(MODULE_WIDTH-1)-(k%MODULE_WIDTH) + int(floor((COLUMN_DRIVERS-1-k)/MODULE_WIDTH))*MODULE_WIDTH*2+MODULE_WIDTH] = reverseBits(valG);
         
         valR = 0x0;
         valG = 0x0;
@@ -392,13 +392,13 @@ int main()
 
             switch(color)
             {
-                case 2:
+                case 1:
                 currentTime.append("                       CNN");
                 break;
                 case 3:
                 currentTime.append("               Google News");
                 break;
-                case 1:
+                case 2:
                 currentTime.append("                  Engadget");
                 break;
             }
@@ -470,13 +470,13 @@ int main()
 
             switch(color)
             {
-                case 2:
+                case 1:
                 currentTime.append("                       CNN");
                 break;
                 case 3:
                 currentTime.append("               Google News");
                 break;
-                case 1:
+                case 2:
                 currentTime.append("                  Engadget");
                 break;
             }
