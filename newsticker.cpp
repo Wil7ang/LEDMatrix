@@ -393,13 +393,13 @@ int main()
             switch(color)
             {
                 case 2:
-                currentTime.append("                      CNN");
+                currentTime.append("                       CNN");
                 break;
                 case 3:
-                currentTime.append("              Google News");
+                currentTime.append("               Google News");
                 break;
                 case 1:
-                currentTime.append("                 Engadget");
+                currentTime.append("                  Engadget");
                 break;
             }
         }
@@ -471,13 +471,13 @@ int main()
             switch(color)
             {
                 case 2:
-                currentTime.append("                      CNN");
+                currentTime.append("                       CNN");
                 break;
                 case 3:
-                currentTime.append("              Google News");
+                currentTime.append("               Google News");
                 break;
                 case 1:
-                currentTime.append("                 Engadget");
+                currentTime.append("                  Engadget");
                 break;
             }
         }
