@@ -99,7 +99,7 @@ std::map<char, std::pair<int, int> > targaCharacterDictionary =
     { '7', std::pair<int, int>(779,8)  },
     { '8', std::pair<int, int>(787,10) },
     { '9', std::pair<int, int>(797,9)  },
-    { ' ', std::pair<int, int>(806,10) }
+    { ' ', std::pair<int, int>(806,5) }
 };
 
 std::map<char, std::pair<int, int> > tinyCharacterDictionary =
