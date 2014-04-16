@@ -9,6 +9,7 @@
 #include <cmath>
 #include "./sansfont.h"
 #include "./targafont.h"
+#include "./weatherfont.h"
 #include <algorithm>
 
 #include "mrss.h"
@@ -232,6 +233,28 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
                 }
 
                 tinyCurrentIndex = tinyCharacterDictionary[tinystr[currentStringPositionTiny]].first+currentLetterPositionTiny;
+            }
+
+            if(K == 22 && currentRow >= 16)
+            {
+                valR |= (weatherfont[i][currentRow-16] == 1);
+                valR |= (weatherfont[i][currentRow-16] == 3);
+                valG |= (weatherfont[i][currentRow-16] == 2);
+                valG |= (weatherfont[i][currentRow-16] == 3);
+            }
+            if(K == 23 && currentRow >= 16)
+            {
+                valR |= (weatherfont[i+8][currentRow-16] == 1);
+                valR |= (weatherfont[i+8][currentRow-16] == 3);
+                valG |= (weatherfont[i+8][currentRow-16] == 2);
+                valG |= (weatherfont[i+8][currentRow-16] == 3);
+            }
+            if(K == 24 && currentRow >= 16)
+            {
+                valR |= (weatherfont[i+16][currentRow-16] == 1);
+                valR |= (weatherfont[i+16][currentRow-16] == 3);
+                valG |= (weatherfont[i+16][currentRow-16] == 2);
+                valG |= (weatherfont[i+16][currentRow-16] == 3);
             }
         }
 
