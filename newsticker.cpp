@@ -176,32 +176,6 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
         {
             valR <<= 1;
             valG <<= 1;
-            if(offsetT < 0)
-            {
-                offsetT++;
-            }
-            else if(stringPosition < length && (currentRow < 16 || str[stringPosition] == 'Q' || str[stringPosition] == 'g' || str[stringPosition] == 'j' || str[stringPosition] == 'p' || str[stringPosition] == 'q' || str[stringPosition] == 'y' ))
-            {
-                if(color == 1 || color == 3)
-                {
-                    valR |= targafont[currentRow][currentIndex];
-                }
-
-                if(color == 2 || color == 3)
-                {
-                    valG |= targafont[currentRow][currentIndex];
-                }
-
-                currentLetterPosition++;
-
-                if(currentLetterPosition >= currentLetterLength)
-                {
-                    stringPosition++;
-                    currentLetterLength = characterDictionary[str[stringPosition]].second;
-                    currentLetterPosition = 0;
-                }
-                currentIndex = characterDictionary[str[stringPosition]].first+currentLetterPosition;
-            }
             
             if(tinyOffset < 0)
             {
@@ -233,6 +207,33 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
                 }
 
                 tinyCurrentIndex = tinyCharacterDictionary[tinystr[currentStringPositionTiny]].first+currentLetterPositionTiny;
+            }
+
+            if(offsetT < 0)
+            {
+                offsetT++;
+            }
+            else if(stringPosition < length && (currentRow < 16 || str[stringPosition] == 'Q' || str[stringPosition] == 'g' || str[stringPosition] == 'j' || str[stringPosition] == 'p' || str[stringPosition] == 'q' || str[stringPosition] == 'y' ))
+            {
+                if(color == 1 || color == 3)
+                {
+                    valR |= targafont[currentRow][currentIndex];
+                }
+
+                if(color == 2 || color == 3)
+                {
+                    valG |= targafont[currentRow][currentIndex];
+                }
+
+                currentLetterPosition++;
+
+                if(currentLetterPosition >= currentLetterLength)
+                {
+                    stringPosition++;
+                    currentLetterLength = characterDictionary[str[stringPosition]].second;
+                    currentLetterPosition = 0;
+                }
+                currentIndex = characterDictionary[str[stringPosition]].first+currentLetterPosition;
             }
 
             if(k == 18 && currentRow >= 16)
