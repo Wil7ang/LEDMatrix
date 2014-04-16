@@ -235,21 +235,21 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
                 tinyCurrentIndex = tinyCharacterDictionary[tinystr[currentStringPositionTiny]].first+currentLetterPositionTiny;
             }
 
-            if(k == 22 && currentRow >= 16)
+            if(k == 18 && currentRow >= 16)
             {
                 valR |= (weatherIcons[i][currentRow-16] == 1);
                 valR |= (weatherIcons[i][currentRow-16] == 3);
                 valG |= (weatherIcons[i][currentRow-16] == 2);
                 valG |= (weatherIcons[i][currentRow-16] == 3);
             }
-            if(k == 23 && currentRow >= 16)
+            if(k == 19 && currentRow >= 16)
             {
                 valR |= (weatherIcons[i+8][currentRow-16] == 1);
                 valR |= (weatherIcons[i+8][currentRow-16] == 3);
                 valG |= (weatherIcons[i+8][currentRow-16] == 2);
                 valG |= (weatherIcons[i+8][currentRow-16] == 3);
             }
-            if(k == 24 && currentRow >= 16)
+            if(k == 20 && currentRow >= 16)
             {
                 valR |= (weatherIcons[i+16][currentRow-16] == 1);
                 valR |= (weatherIcons[i+16][currentRow-16] == 3);
