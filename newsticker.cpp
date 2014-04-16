@@ -16,6 +16,39 @@
 #include <time.h>
 #include <pthread.h>
 
+#include <curl/curl.h>
+
+struct string {
+  char *ptr;
+  size_t len;
+};
+
+void init_string(struct string *s) {
+  s->len = 0;
+  s->ptr = (char*)malloc(s->len+1);
+  if (s->ptr == NULL) {
+    fprintf(stderr, "malloc() failed\n");
+    exit(EXIT_FAILURE);
+  }
+  s->ptr[0] = '\0';
+}
+
+size_t writefunc(void *ptr, size_t size, size_t nmemb, struct string *s)
+{
+  size_t new_len = s->len + size*nmemb;
+  s->ptr = (char*)realloc(s->ptr, new_len+1);
+  if (s->ptr == NULL) {
+    fprintf(stderr, "realloc() failed\n");
+    exit(EXIT_FAILURE);
+  }
+  memcpy(s->ptr+s->len, ptr, size*nmemb);
+  s->ptr[new_len] = '\0';
+  s->len = new_len;
+
+  return size*nmemb;
+}
+
+
 #define COLUMN_DRIVERS 30
 #define MODULE_WIDTH 3
 
@@ -81,6 +114,29 @@ void *GetRSSFeed(void *newsData)
     mrss_free(data);
 
     pthread_exit(NULL);
+}
+
+void *GetWeather(void *data)
+{
+    CURL *curl;
+    CURLcode res;
+
+    curl = curl_easy_init();
+    if(curl) {
+    struct string s;
+    init_string(&s);
+
+    curl_easy_setopt(curl, CURLOPT_URL, "http://api.openweathermap.org/data/2.5/forecast/daily?q=Berkeley&mode=json&units=imperial&cnt=1");
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &s);
+    res = curl_easy_perform(curl);
+
+    printf("%s\n", s.ptr);
+    free(s.ptr);
+
+    /* always cleanup */
+    curl_easy_cleanup(curl);
+    }
 }
 
 const char *byte_to_binary(int x)
@@ -180,14 +236,14 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
             {
                 offsetT++;
             }
-            else if(stringPosition < length && (currentRow < 16 || (str[stringPosition] == 'Q' || str[stringPosition] == 'g' || str[stringPosition] == 'j' || str[stringPosition] == 'p' || str[stringPosition] == 'q' || str[stringPosition] == 'y' )))
+            else if(stringPosition < length)
             {
-                if(color == 1 || color == 3)
+                if((color == 1 || color == 3) && (currentRow < 16 || str[stringPosition] == 'Q' || str[stringPosition] == 'g' || str[stringPosition] == 'j' || str[stringPosition] == 'p' || str[stringPosition] == 'q' || str[stringPosition] == 'y' ))
                 {
                     valR |= targafont[currentRow][currentIndex];
                 }
 
-                if(color == 2 || color == 3)
+                if((color == 2 || color == 3) && (currentRow < 16 || str[stringPosition] == 'Q' || str[stringPosition] == 'g' || str[stringPosition] == 'j' || str[stringPosition] == 'p' || str[stringPosition] == 'q' || str[stringPosition] == 'y' ))
                 {
                     valG |= targafont[currentRow][currentIndex];
                 }
