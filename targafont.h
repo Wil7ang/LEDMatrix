@@ -95,7 +95,7 @@ std::map<char, std::pair<int, int> > targaCharacterDictionary =
     { '3', std::pair<int, int>(740,10) },
     { '4', std::pair<int, int>(750,10) },
     { '5', std::pair<int, int>(760,10) },
-    { '6', std::pair<int, int>(770,9) },
+    { '6', std::pair<int, int>(770,8) },
     { '7', std::pair<int, int>(779,8)  },
     { '8', std::pair<int, int>(787,10) },
     { '9', std::pair<int, int>(797,9)  },
