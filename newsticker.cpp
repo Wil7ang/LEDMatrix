@@ -256,6 +256,20 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
                 valG |= (weatherIcons[currentRow-16][i+16] == 2);
                 valG |= (weatherIcons[currentRow-16][i+16] == 3);
             }
+            if(k == 21 && currentRow >= 16)
+            {
+                valR |= (weatherIcons[currentRow-16][i+24] == 1);
+                valR |= (weatherIcons[currentRow-16][i+24] == 3);
+                valG |= (weatherIcons[currentRow-16][i+24] == 2);
+                valG |= (weatherIcons[currentRow-16][i+24] == 3);
+            }
+            if(k == 22 && currentRow >= 16)
+            {
+                valR |= (weatherIcons[currentRow-16][i+32] == 1);
+                valR |= (weatherIcons[currentRow-16][i+32] == 3);
+                valG |= (weatherIcons[currentRow-16][i+32] == 2);
+                valG |= (weatherIcons[currentRow-16][i+32] == 3);
+            }
         }
 
 #ifdef HW_DEBUGMODE
