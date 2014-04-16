@@ -123,7 +123,7 @@ void *GetWeather(void *data)
 
     curl = curl_easy_init();
     if(curl) {
-    struct string s;
+    struct strings s;
     init_string(&s);
 
     curl_easy_setopt(curl, CURLOPT_URL, "http://api.openweathermap.org/data/2.5/forecast/daily?q=Berkeley&mode=json&units=imperial&cnt=1");
