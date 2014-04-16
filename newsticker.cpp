@@ -207,19 +207,19 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
             {
                 tinyOffset++;
             }
-            else if(currentStringPositionTiny < tinyLength && currentRow >= 16)
+            else if(currentStringPositionTiny < tinyLength && currentRow >= 16 )
             {
                 if(tinyColor == 1 || tinyColor == 3)
                 {
                     if(currentRow == 16 && tinystr[currentStringPositionTiny] == '4'){}
-                    else
+                    else if(tinystr[currentStringPositionTiny] != ' ')
                         valR |= targafont[currentRow][tinyCurrentIndex];
                 }
 
                 if(tinyColor == 2 || tinyColor == 3)
                 {
                     if(currentRow == 16 && tinystr[currentStringPositionTiny] == '4'){}
-                    else
+                    else if(tinystr[currentStringPositionTiny] != ' ')
                         valG |= targafont[currentRow][tinyCurrentIndex];
                 }
 
@@ -237,24 +237,24 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
 
             if(k == 18 && currentRow >= 16)
             {
-                valR |= (weatherIcons[i][currentRow-16] == 1);
-                valR |= (weatherIcons[i][currentRow-16] == 3);
-                valG |= (weatherIcons[i][currentRow-16] == 2);
-                valG |= (weatherIcons[i][currentRow-16] == 3);
+                valR |= (weatherIcons[currentRow-16][i] == 1);
+                valR |= (weatherIcons[currentRow-16][i] == 3);
+                valG |= (weatherIcons[currentRow-16][i] == 2);
+                valG |= (weatherIcons[currentRow-16][i] == 3);
             }
             if(k == 19 && currentRow >= 16)
             {
-                valR |= (weatherIcons[i+8][currentRow-16] == 1);
-                valR |= (weatherIcons[i+8][currentRow-16] == 3);
-                valG |= (weatherIcons[i+8][currentRow-16] == 2);
-                valG |= (weatherIcons[i+8][currentRow-16] == 3);
+                valR |= (weatherIcons[currentRow-16][i+8] == 1);
+                valR |= (weatherIcons[currentRow-16][i+8] == 3);
+                valG |= (weatherIcons[currentRow-16][i+8] == 2);
+                valG |= (weatherIcons[currentRow-16][i+8] == 3);
             }
             if(k == 20 && currentRow >= 16)
             {
-                valR |= (weatherIcons[i+16][currentRow-16] == 1);
-                valR |= (weatherIcons[i+16][currentRow-16] == 3);
-                valG |= (weatherIcons[i+16][currentRow-16] == 2);
-                valG |= (weatherIcons[i+16][currentRow-16] == 3);
+                valR |= (weatherIcons[currentRow-16][i+16] == 1);
+                valR |= (weatherIcons[currentRow-16][i+16] == 3);
+                valG |= (weatherIcons[currentRow-16][i+16] == 2);
+                valG |= (weatherIcons[currentRow-16][i+16] == 3);
             }
         }
 
