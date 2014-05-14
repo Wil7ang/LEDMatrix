@@ -148,8 +148,8 @@ void *GetWeather(void *weatherData)
 
     bool parsingSuccessful = reader.parse( jsonData, root );
 
-    weatherText = root["list"][0].get("max", "-1").asString();
-    
+    float highTemperature = root["list"][0]["temp"].get("max", -1.0f).asFloat();
+    weatherText = std::to_string(highTemperature);
 
     string *nextString = (string *)weatherData;
     nextString->assign(weatherText);
