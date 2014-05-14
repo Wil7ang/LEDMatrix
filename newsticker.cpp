@@ -18,6 +18,8 @@
 
 #include <curl/curl.h>
 
+#include "json/json.h"
+
 struct strings {
   char *ptr;
   size_t len;
@@ -116,8 +118,10 @@ void *GetRSSFeed(void *newsData)
     pthread_exit(NULL);
 }
 
-void *GetWeather(void *data)
+void *GetWeather(void *weatherData)
 {
+    string weatherText = "";
+
     CURL *curl;
     CURLcode res;
 
@@ -132,10 +136,28 @@ void *GetWeather(void *data)
     res = curl_easy_perform(curl);
 
     printf("%s\n", s.ptr);
+    string jsonData = s.ptr;
     free(s.ptr);
 
     /* always cleanup */
     curl_easy_cleanup(curl);
+
+
+    Json::Value root;   // will contains the root value after parsing.
+    Json::Reader reader;
+
+    bool parsingSuccessful = reader.parse( jsonData, root );
+
+    weatherText = reader["list"][0].get("max", "-1").asString();
+    
+
+    string *nextString = (string *)weatherData;
+    nextString->assign(weatherText);
+
+    weatherData = (void*)nextString;
+
+
+
     }
 }
 
@@ -424,6 +446,16 @@ int main()
     pthread_create(&thread, NULL, GetRSSFeed, (void *) nextString);
     printf("%s\n\n", newsString.c_str());
 
+    pthread_t weatherThread;
+    string *nextWeatherString = new string();
+    nextWeatherString->assign("");
+    pthread_create(&thread, NULL, GetWeather, (void *) nextWeatherString);
+    pthread_join(weatherThread, NULL);
+    weatherString = nextWeatherString->c_str();
+    delete nextWeatherString;
+    nextWeatherString = new string();
+    nextWeatherString->assign("");
+
     time_t rawtime;
     struct tm * timeinfo;
     time (&rawtime);
@@ -437,8 +469,21 @@ int main()
     int fpsCounter = 0;
     unsigned long fpsTime = millis();
 
+
+    int weatherTimer = millis();
+    string weatherString = "";
     while(true)
     {
+        if(millis() - weatherTimer >= 3600000)
+        {
+            weatherString = nextWeatherString->c_str();
+            delete nextWeatherString;
+            nextWeatherString = new string();
+            nextWeatherString->assign("");
+            pthread_join(weatherThread, NULL);
+            pthread_create(&weatherThread, NULL, GetWeather, (void *) nextWeatherString);
+        }
+
         //If the end of the news text is reached, load the next news source's text
         if(offset >= stringPixelLength)
         {
@@ -560,7 +605,8 @@ int main()
             currentTime.append(" ");
             currentTime.append(to_string(fps));
 #endif
-
+            currentTime.append(" ");
+            currentTime.append(weatherString);
             switch(color)
             {
                 case 1:
