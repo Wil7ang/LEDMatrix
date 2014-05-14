@@ -148,7 +148,7 @@ void *GetWeather(void *weatherData)
 
     bool parsingSuccessful = reader.parse( jsonData, root );
 
-    weatherText = reader["list"][0].get("max", "-1").asString();
+    weatherText = root["list"][0].get("max", "-1").asString();
     
 
     string *nextString = (string *)weatherData;
@@ -446,6 +446,9 @@ int main()
     pthread_create(&thread, NULL, GetRSSFeed, (void *) nextString);
     printf("%s\n\n", newsString.c_str());
 
+    string weatherString = "";
+
+
     pthread_t weatherThread;
     string *nextWeatherString = new string();
     nextWeatherString->assign("");
@@ -471,7 +474,6 @@ int main()
 
 
     int weatherTimer = millis();
-    string weatherString = "";
     while(true)
     {
         if(millis() - weatherTimer >= 3600000)
