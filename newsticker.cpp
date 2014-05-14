@@ -148,7 +148,7 @@ void *GetWeather(void *weatherData)
 
     bool parsingSuccessful = reader.parse( jsonData, root );
 
-    float highTemperature = root["list"][0]["temp"].get("max", -1.0f).asFloat();
+    int highTemperature = root["list"][0]["temp"].get("max", -1.0f).asInt();
     weatherText = std::to_string(highTemperature);
 
     string *nextString = (string *)weatherData;
@@ -533,13 +533,13 @@ int main()
             switch(color)
             {
                 case 1:
-                currentTime.append("                       CNN");
+                currentTime.append("                    CNN");
                 break;
                 case 3:
-                currentTime.append("               Google News");
+                currentTime.append("            Google News");
                 break;
                 case 2:
-                currentTime.append("                  Engadget");
+                currentTime.append("              Engadget");
                 break;
             }
         }
@@ -612,13 +612,13 @@ int main()
             switch(color)
             {
                 case 1:
-                currentTime.append("                       CNN");
+                currentTime.append("                    CNN");
                 break;
                 case 3:
-                currentTime.append("               Google News");
+                currentTime.append("            Google News");
                 break;
                 case 2:
-                currentTime.append("                  Engadget");
+                currentTime.append("               Engadget");
                 break;
             }
         }
