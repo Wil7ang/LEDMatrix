@@ -478,6 +478,7 @@ int main()
     {
         if(millis() - weatherTimer >= 3600000)
         {
+            weatherTimer = millis();
             weatherString = nextWeatherString->c_str();
             delete nextWeatherString;
             nextWeatherString = new string();
