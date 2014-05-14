@@ -156,7 +156,7 @@ void *GetWeather(void *weatherData)
 
     weatherData = (void*)nextString;
 
-
+    pthread_exit(NULL);
 
     }
 }
@@ -452,7 +452,7 @@ int main()
     pthread_t weatherThread;
     string *nextWeatherString = new string();
     nextWeatherString->assign("");
-    pthread_create(&thread, NULL, GetWeather, (void *) nextWeatherString);
+    pthread_create(&weatherThread, NULL, GetWeather, (void *) nextWeatherString);
     pthread_join(weatherThread, NULL);
     weatherString = nextWeatherString->c_str();
     delete nextWeatherString;
