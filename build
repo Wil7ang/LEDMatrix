@@ -1,3 +1,3 @@
 #!/bin/bash
 
-g++ -O3 -o newsticker -lwiringPi -lmrss -std=c++0x ./newsticker.cpp ./jsoncpp.cpp
+g++ -L./ -O3 -o newsticker -lwiringPi -lmrss -std=c++0x ./jsoncpp.cpp ./newsticker.cpp 
