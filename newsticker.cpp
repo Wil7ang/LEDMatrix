@@ -550,10 +550,11 @@ int main()
 
 
         //Render the frame to the display
+        unsigned long stTime = 0;
         rows = 0x800000;
         for(int row = 0; row < 24; row++)
         {
-            unsigned long stTime = micros();
+            
 
             unsigned char* buffer = encodeLetters(newsString.c_str(), color, newsString.length(), offset, row, lastFirstLetter, curWidthSum, targaCharacterDictionary, currentTime.c_str(), currentTime.length(), 0, 2);
             buffer[COLUMN_DRIVERS * 2] = reverseBits(~rows);
@@ -575,15 +576,18 @@ int main()
 
             rows = rows >> 1;
 
-            digitalWrite(latchPin, HIGH);
-            digitalWrite(latchPin, LOW);
-            
             unsigned long endTime = micros();
+
             if(endTime - stTime < onTime)
             {
                 delt = endTime - stTime;
                 delayMicroseconds(onTime - (endTime-stTime)); 
             }
+
+            digitalWrite(latchPin, HIGH);
+            digitalWrite(latchPin, LOW);
+
+            stTime = micros();
         }
         wiringPiSPIDataRW(0, clear, COLUMN_DRIVERS * 2 + 3);
         digitalWrite(latchPin, HIGH);
