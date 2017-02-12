@@ -132,7 +132,7 @@ void *GetWeather(void *weatherData)
     struct strings s;
     init_string(&s);
 
-    curl_easy_setopt(curl, CURLOPT_URL, (std::string("http://api.openweathermap.org/data/2.5/forecast/daily?q=Redwood%20City&mode=json&units=imperial&cnt=1&appid=") + std::string(APPKEY)).c_str() );
+    curl_easy_setopt(curl, CURLOPT_URL, (std::string("http://api.openweathermap.org/data/2.5/forecast?q=Redwood%20City&mode=json&units=imperial&cnt=1&appid=") + std::string(APPKEY)).c_str() );
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &s);
     res = curl_easy_perform(curl);
@@ -150,7 +150,7 @@ void *GetWeather(void *weatherData)
 
     bool parsingSuccessful = reader.parse( jsonData, root );
 
-    int highTemperature = root["list"][0]["temp"].get("max", -1.0f).asInt();
+    int highTemperature = root["list"][0]["main"].get("temp_max", -1.0f).asInt();
     weatherText = std::to_string(highTemperature);
 
     string *nextString = (string *)weatherData;
