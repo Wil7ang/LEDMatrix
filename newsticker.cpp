@@ -314,7 +314,7 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
 
                 tinyCurrentIndex = tinyCharacterDictionary[tinystr[currentStringPositionTiny]].first+currentLetterPositionTiny;
             }
-
+/*
             if(k == 18 && currentRow >= 16)
             {
                 valR |= (weatherIcons[currentRow-16][i] == 1);
@@ -350,6 +350,7 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
                 valG |= (weatherIcons[currentRow-16][i+32] == 2);
                 valG |= (weatherIcons[currentRow-16][i+32] == 3);
             }
+*/
         }
 
 #ifdef HW_DEBUGMODE
