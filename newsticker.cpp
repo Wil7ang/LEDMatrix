@@ -431,7 +431,7 @@ int main()
     else
         newsString = "No internet connection!";
 
-    std::pair<int, int> > *characterDictionary = &targaCharacterDictionary;
+    std::map<char, std::pair<int, int> > *characterDictionary = &targaCharacterDictionary;
 
 //    transform(newsString.begin(), newsString.end(),newsString.begin(), ::toupper);
 
