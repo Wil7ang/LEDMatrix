@@ -20,7 +20,7 @@
 
 #include "json/json.h"
 
-#define OPENWEATHER_API_KEY "xxxx"
+#define OPENWEATHER_API_KEY "xxx"
 
 struct strings {
   char *ptr;
@@ -83,7 +83,7 @@ void *GetRSSFeed(void *newsData)
     switch(newsSource)
     {
         case 0:
-        ret = mrss_parse_url_with_options_and_error ("https://news.google.com/?output=rss", &data, NULL, &code);
+        ret = mrss_parse_url_with_options_and_error ("https://news.google.com/news/rss/?ned=us&gl=US&hl=en", &data, NULL, &code);
         newsSource++;
         break;
 
@@ -208,7 +208,7 @@ char reverseBits(char x)
     return x;
 }
 
-unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int length, int offset, int currentRow, int &lastFirstLetter, int &curWidthSum, std::map<char, std::pair<int, int> > &characterDictionary, const char* tinystr, int tinyLength, int tinyOffset, int tinyColor)
+unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int length, int offset, int currentRow, int &lastFirstLetter, int &curWidthSum, std::map<char, std::pair<int, int> > &characterDictionary, const char* tinystr, int tinyLength, int tinyOffset, int tinyColor, bool* fontArray)
 {
     unsigned char *buffer = new unsigned char[COLUMN_DRIVERS * 2 + 3];
     int offsetT = offset;
@@ -264,12 +264,12 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
             {
                 if((color == 1 || color == 3) && (currentRow < 16 || str[stringPosition] == 'Q' || str[stringPosition] == 'g' || str[stringPosition] == 'j' || str[stringPosition] == 'p' || str[stringPosition] == 'q' || str[stringPosition] == 'y' ))
                 {
-                    valR |= targafont[currentRow][currentIndex];
+                    valR |= fontArray[currentRow][currentIndex];
                 }
 
                 if((color == 2 || color == 3) && (currentRow < 16 || str[stringPosition] == 'Q' || str[stringPosition] == 'g' || str[stringPosition] == 'j' || str[stringPosition] == 'p' || str[stringPosition] == 'q' || str[stringPosition] == 'y' ))
                 {
-                    valG |= targafont[currentRow][currentIndex];
+                    valG |= fontArray[currentRow][currentIndex];
                 }
 
                 currentLetterPosition++;
@@ -352,7 +352,6 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
             }
 */
         }
-
 #ifdef HW_DEBUGMODE
         if(offset % 100 >=0 && offset % 100 < 50)
         {
@@ -432,7 +431,7 @@ int main()
     else
         newsString = "No internet connection!";
 
-    transform(newsString.begin(), newsString.end(),newsString.begin(), ::toupper);
+//    transform(newsString.begin(), newsString.end(),newsString.begin(), ::toupper);
 
     int stringPixelLength = 0;
     for(int i = 0; i < newsString.length(); i++)
@@ -499,7 +498,7 @@ int main()
 
             newsString = nextString->c_str();
 
-            transform(newsString.begin(), newsString.end(),newsString.begin(), ::toupper);
+//            transform(newsString.begin(), newsString.end(),newsString.begin(), ::toupper);
             delete nextString;
             nextString = new string();
             nextString->assign("");
@@ -559,7 +558,7 @@ int main()
         {
             
 
-            unsigned char* buffer = encodeLetters(newsString.c_str(), color, newsString.length(), offset, row, lastFirstLetter, curWidthSum, targaCharacterDictionary, currentTime.c_str(), currentTime.length(), 0, 2);
+            unsigned char* buffer = encodeLetters(newsString.c_str(), color, newsString.length(), offset, row, lastFirstLetter, curWidthSum, targaCharacterDictionary, currentTime.c_str(), currentTime.length(), 0, 2, targafont);
             buffer[COLUMN_DRIVERS * 2] = reverseBits(~rows);
             buffer[COLUMN_DRIVERS * 2 + 1] = reverseBits(~rows>>8);
             buffer[COLUMN_DRIVERS * 2 + 2] = reverseBits(~rows>>16);
