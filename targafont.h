@@ -37,7 +37,7 @@ std::map<char, std::pair<int, int> > targaCharacterDictionary =
     { 'd', std::pair<int, int>(273,10) },
     { 'e', std::pair<int, int>(283,9)  },
     { 'f', std::pair<int, int>(292,9)  },
-    { 'g', std::pair<int, int>(301,10) },
+    { 'g', std::pair<int, int>(301,9) },
     { 'h', std::pair<int, int>(311,9)  },
     { 'i', std::pair<int, int>(320,10) },
     { 'j', std::pair<int, int>(330,10) },
