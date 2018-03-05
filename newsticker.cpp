@@ -70,6 +70,8 @@ unsigned long delt = 0;
 
 int newsSource = 0;
 int color = 2;
+
+float offsetAmount = 1.5f;
         
 void *GetRSSFeed(void *newsData)
 {
@@ -414,7 +416,7 @@ int main()
     mrss_t *data;
     CURLcode code;
     mrss_item_t *item;
-    mrss_error_t ret = mrss_parse_url_with_options_and_error ("https://news.google.com/?output=rss", &data, NULL, &code);
+    mrss_error_t ret = mrss_parse_url_with_options_and_error ("https://news.google.com/news/rss/?ned=us&gl=US&hl=en", &data, NULL, &code);
     string newsString = "";
 
     if(!ret)
@@ -604,7 +606,7 @@ int main()
         if(millis() - delta > 6)
         {
             delta = millis();  
-            offset+=1.0f;
+            offset+=offsetAmount;
 
             //Get Time Info
             time (&rawtime);
