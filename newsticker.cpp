@@ -264,12 +264,12 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
             {
                 if((color == 1 || color == 3) && (currentRow < 16 || str[stringPosition] == 'Q' || str[stringPosition] == 'g' || str[stringPosition] == 'j' || str[stringPosition] == 'p' || str[stringPosition] == 'q' || str[stringPosition] == 'y' ))
                 {
-                    valR |= fontArray[currentRow * targaFontWidth + currentIndex];
+                    valR |= fontArray[currentRow * fontArrayWidth + currentIndex];
                 }
 
                 if((color == 2 || color == 3) && (currentRow < 16 || str[stringPosition] == 'Q' || str[stringPosition] == 'g' || str[stringPosition] == 'j' || str[stringPosition] == 'p' || str[stringPosition] == 'q' || str[stringPosition] == 'y' ))
                 {
-                    valG |= fontArray[currentRow * targaFontWidth + currentIndex];
+                    valG |= fontArray[currentRow * fontArrayWidth + currentIndex];
                 }
 
                 currentLetterPosition++;
