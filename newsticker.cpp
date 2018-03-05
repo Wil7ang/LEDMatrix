@@ -492,6 +492,8 @@ int main()
             lastFirstLetter = 0;
             curWidthSum = 0;
 
+            pthread_join(thread, NULL);
+
             newsString = nextString->c_str();
             newsSource = nextNewsSource;
 
@@ -527,7 +529,6 @@ int main()
             nextString->assign("");
 
             //if(newsString == "NO INTERNET CONNECTION!")
-            pthread_join(thread, NULL);
 
             pthread_create(&thread, NULL, GetRSSFeed, (void *) nextString);
 
