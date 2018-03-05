@@ -71,7 +71,7 @@ unsigned long delt = 0;
 int newsSource = 0;
 int color = 2;
 
-float offsetAmount = 1.5f;
+float offsetAmount = 1.25f;
         
 void *GetRSSFeed(void *newsData)
 {
