@@ -69,7 +69,8 @@ float onTime = ((1.0f/refreshRate) / numberOfRows) * 1000000.0f;
 unsigned long delt = 0;
 
 int newsSource = 0;
-int color = 2;
+int nextNewsSource = 0;
+int color = 1;
 
 float offsetAmount = 1.5f;
         
@@ -84,9 +85,9 @@ void *GetRSSFeed(void *newsData)
     mrss_error_t ret;
     switch(newsSource)
     {
-        case 0:
+        case 1:
         ret = mrss_parse_url_with_options_and_error ("https://news.google.com/news/rss/?ned=us&gl=US&hl=en", &data, NULL, &code);
-        newsSource = 1;
+        nextNewsSource = 0;
         break;
 
         // case 1:
@@ -94,9 +95,9 @@ void *GetRSSFeed(void *newsData)
         // newsSource++;
         // break;
 
-        case 1:
+        case 0:
         ret = mrss_parse_url_with_options_and_error ("http://www.engadget.com/rss.xml", &data, NULL, &code);
-        newsSource = 0;
+        nextNewsSource = 1;
         break;
     }
 
@@ -413,28 +414,18 @@ int main()
 
     digitalWrite(latchPin, LOW);
     
+    std::map<char, std::pair<int, int> > *characterDictionary = &targaCharacterDictionary;
+
     mrss_t *data;
     CURLcode code;
     mrss_item_t *item;
-    mrss_error_t ret = mrss_parse_url_with_options_and_error ("https://news.google.com/news/rss/?ned=us&gl=US&hl=en", &data, NULL, &code);
-    string newsString = "";
+    mrss_error_t ret;// = mrss_parse_url_with_options_and_error ("https://news.google.com/news/rss/?ned=us&gl=US&hl=en", &data, NULL, &code);
+    
+    //Initialize display with booting message
+    string newsString = "Booting....ABCDEFGHIJKLMNOPQRSTUVWXYZ...     Booting....ABCDEFGHIJKLMNOPQRSTUVWXYZ..     Booting....ABCDEFGHIJKLMNOPQRSTUVWXYZ..     Booting....ABCDEFGHIJKLMNOPQRSTUVWXYZ..     Booting....ABCDEFGHIJKLMNOPQRSTUVWXYZ..     Booting....ABCDEFGHIJKLMNOPQRSTUVWXYZ..     Booting....ABCDEFGHIJKLMNOPQRSTUVWXYZ..     Booting....ABCDEFGHIJKLMNOPQRSTUVWXYZ..     Booting....ABCDEFGHIJKLMNOPQRSTUVWXYZ..     Booting....ABCDEFGHIJKLMNOPQRSTUVWXYZ..     Booting....ABCDEFGHIJKLMNOPQRSTUVWXYZ..     Booting....ABCDEFGHIJKLMNOPQRSTUVWXYZ..";
+    printf("%s\n\n", newsString.c_str());
 
-    if(!ret)
-    {
-        item = data->item;
-        
-        while(item)
-        {
-            newsString += item->title;
-            newsString += "   ";
-            item = item->next;
-        }
-    }
-    else
-        newsString = "No internet connection!";
-
-    std::map<char, std::pair<int, int> > *characterDictionary = &targaCharacterDictionary;
-
+    //Transform news string to uppercase
 //    transform(newsString.begin(), newsString.end(),newsString.begin(), ::toupper);
 
     int stringPixelLength = 0;
@@ -450,10 +441,8 @@ int main()
     string *nextString = new string();
     nextString->assign("");
     pthread_create(&thread, NULL, GetRSSFeed, (void *) nextString);
-    printf("%s\n\n", newsString.c_str());
 
     string weatherString = "";
-
 
     pthread_t weatherThread;
     string *nextWeatherString = new string();
@@ -480,6 +469,9 @@ int main()
 
 
     int weatherTimer = millis();
+
+    pthread_join(thread, NULL);
+
     while(true)
     {
         if(millis() - weatherTimer >= 3600000)
@@ -501,6 +493,7 @@ int main()
             curWidthSum = 0;
 
             newsString = nextString->c_str();
+            newsSource = nextNewsSource;
 
 //            transform(newsString.begin(), newsString.end(),newsString.begin(), ::toupper);
             
@@ -516,15 +509,15 @@ int main()
             else
                 color = 3;
 
-            switch(color)
+            switch(newsSource)
             {
                 // case 1:
                 // currentTime.append("                    CNN");
                 // break;
-                case 1:
+                case 0:
                 currentTime.append("            Google News");
                 break;
-                case 3:
+                case 1:
                 currentTime.append("              Engadget");
                 break;
             }
@@ -620,12 +613,12 @@ int main()
 #endif
             currentTime.append(" ");
             currentTime.append(weatherString);
-            switch(color)
+            switch(newsSource)
             {
-                case 1:
+                case 0:
                 currentTime.append("            Google News");
                 break;
-                case 3:
+                case 1:
                 currentTime.append("               Engadget");
                 break;
             }
