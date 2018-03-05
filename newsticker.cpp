@@ -208,7 +208,7 @@ char reverseBits(char x)
     return x;
 }
 
-unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int length, int offset, int currentRow, int &lastFirstLetter, int &curWidthSum, std::map<char, std::pair<int, int> > &characterDictionary, const char* tinystr, int tinyLength, int tinyOffset, int tinyColor, const bool* fontArray)
+unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int length, int offset, int currentRow, int &lastFirstLetter, int &curWidthSum, std::map<char, std::pair<int, int> > &characterDictionary, const char* tinystr, int tinyLength, int tinyOffset, int tinyColor, const bool* fontArray, const int fontArrayWidth)
 {
     unsigned char *buffer = new unsigned char[COLUMN_DRIVERS * 2 + 3];
     int offsetT = offset;
@@ -264,12 +264,12 @@ unsigned char* encodeLetters(const char* str, /*int* colors*/ int color, int len
             {
                 if((color == 1 || color == 3) && (currentRow < 16 || str[stringPosition] == 'Q' || str[stringPosition] == 'g' || str[stringPosition] == 'j' || str[stringPosition] == 'p' || str[stringPosition] == 'q' || str[stringPosition] == 'y' ))
                 {
-                    valR |= fontArray[currentRow][currentIndex];
+                    valR |= fontArray[currentRow * targaFontWidth + currentIndex];
                 }
 
                 if((color == 2 || color == 3) && (currentRow < 16 || str[stringPosition] == 'Q' || str[stringPosition] == 'g' || str[stringPosition] == 'j' || str[stringPosition] == 'p' || str[stringPosition] == 'q' || str[stringPosition] == 'y' ))
                 {
-                    valG |= fontArray[currentRow][currentIndex];
+                    valG |= fontArray[currentRow * targaFontWidth + currentIndex];
                 }
 
                 currentLetterPosition++;
@@ -560,7 +560,7 @@ int main()
         {
             
 
-            unsigned char* buffer = encodeLetters(newsString.c_str(), color, newsString.length(), offset, row, lastFirstLetter, curWidthSum, *characterDictionary, currentTime.c_str(), currentTime.length(), 0, 2, *targafont);
+            unsigned char* buffer = encodeLetters(newsString.c_str(), color, newsString.length(), offset, row, lastFirstLetter, curWidthSum, *characterDictionary, currentTime.c_str(), currentTime.length(), 0, 2, *targafont, targaFontWidth);
             buffer[COLUMN_DRIVERS * 2] = reverseBits(~rows);
             buffer[COLUMN_DRIVERS * 2 + 1] = reverseBits(~rows>>8);
             buffer[COLUMN_DRIVERS * 2 + 2] = reverseBits(~rows>>16);
