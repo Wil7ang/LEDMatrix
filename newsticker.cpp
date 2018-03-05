@@ -71,7 +71,7 @@ unsigned long delt = 0;
 int newsSource = 0;
 int color = 2;
 
-float offsetAmount = 1.25f;
+float offsetAmount = 1.5f;
         
 void *GetRSSFeed(void *newsData)
 {
@@ -86,15 +86,15 @@ void *GetRSSFeed(void *newsData)
     {
         case 0:
         ret = mrss_parse_url_with_options_and_error ("https://news.google.com/news/rss/?ned=us&gl=US&hl=en", &data, NULL, &code);
-        newsSource++;
+        newsSource = 1;
         break;
+
+        // case 1:
+        // ret = mrss_parse_url_with_options_and_error ("http://rss.cnn.com/rss/cnn_topstories.rss", &data, NULL, &code);
+        // newsSource++;
+        // break;
 
         case 1:
-        ret = mrss_parse_url_with_options_and_error ("http://rss.cnn.com/rss/cnn_topstories.rss", &data, NULL, &code);
-        newsSource++;
-        break;
-
-        case 2:
         ret = mrss_parse_url_with_options_and_error ("http://www.engadget.com/rss.xml", &data, NULL, &code);
         newsSource = 0;
         break;
@@ -134,7 +134,7 @@ void *GetWeather(void *weatherData)
     struct strings s;
     init_string(&s);
 
-    curl_easy_setopt(curl, CURLOPT_URL, (std::string("http://api.openweathermap.org/data/2.5/forecast?q=Redwood%20City&mode=json&units=imperial&cnt=1&appid=") + std::string(OPENWEATHER_API_KEY)).c_str() );
+    curl_easy_setopt(curl, CURLOPT_URL, (std::string("http://api.openweathermap.org/data/2.5/forecast?q=Union%20City&mode=json&units=imperial&cnt=1&appid=") + std::string(OPENWEATHER_API_KEY)).c_str() );
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writefunc);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &s);
     res = curl_easy_perform(curl);
@@ -503,6 +503,32 @@ int main()
             newsString = nextString->c_str();
 
 //            transform(newsString.begin(), newsString.end(),newsString.begin(), ::toupper);
+            
+            stringPixelLength = 0;
+            for(int i = 0; i < newsString.length(); i++)
+            {
+                stringPixelLength += (*characterDictionary)[newsString[i]].second;
+            }
+            printf("%s\n\n", newsString.c_str());
+
+            if(newsSource == 0) //1 = red, 2 = green, 3 = orange
+                color = 1;
+            else
+                color = 3;
+
+            switch(color)
+            {
+                // case 1:
+                // currentTime.append("                    CNN");
+                // break;
+                case 1:
+                currentTime.append("            Google News");
+                break;
+                case 3:
+                currentTime.append("              Engadget");
+                break;
+            }
+
             delete nextString;
             nextString = new string();
             nextString->assign("");
@@ -512,19 +538,6 @@ int main()
 
             pthread_create(&thread, NULL, GetRSSFeed, (void *) nextString);
 
-            stringPixelLength = 0;
-            for(int i = 0; i < newsString.length(); i++)
-            {
-                stringPixelLength += (*characterDictionary)[newsString[i]].second;
-            }
-            printf("%s\n\n", newsString.c_str());
-
-            if(newsSource == 0)
-                color = 2;
-            else if(newsSource == 1)
-                color = 3;
-            else
-                color = 1;
 
             //Get Time Info
             time (&rawtime);
@@ -536,19 +549,6 @@ int main()
             currentTime.append(" ");
             currentTime.append(to_string(fps));
 #endif
-
-            switch(color)
-            {
-                case 1:
-                currentTime.append("                    CNN");
-                break;
-                case 3:
-                currentTime.append("            Google News");
-                break;
-                case 2:
-                currentTime.append("              Engadget");
-                break;
-            }
         }
 
 
@@ -623,12 +623,9 @@ int main()
             switch(color)
             {
                 case 1:
-                currentTime.append("                    CNN");
-                break;
-                case 3:
                 currentTime.append("            Google News");
                 break;
-                case 2:
+                case 3:
                 currentTime.append("               Engadget");
                 break;
             }
